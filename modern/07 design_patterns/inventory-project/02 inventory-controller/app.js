@@ -1,44 +1,5 @@
-// Storage Controller
-
-
-// Item Controller
-const CategoryController = (function(){
-    // Item Constructor
-    const Item = function(categoryId, categoryName, description){
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.description = description;
-    }
-
-    // Data Structure / State
-    const data = {
-        categories: [
-            {categoryId: 1, categoryName: 'Computers', description: 'Computers'},
-            {categoryId: 2, categoryName: 'Smart Phones', description: 'Smart Phones'},
-            {categoryId: 3, categoryName: 'Kids', description: 'Kids'},
-        ],
-        currentCategory: null
-    }
-
-    // Public methods
-    return {
-
-        logData: function(){
-            console.log('Initializing App...');
-        }
-    }
-})();
-
-
-
-// UI Controller
-const UICtrl = (function(){
-    // Public methods
-    return {
-
-    }
-})();
-
+import {UIController} from "./ui-controller.js";
+import {CategoryController} from "./category-controller.js";
 
 
 // App Controller
@@ -51,7 +12,7 @@ const App = (function(CategoryController, UICtrl){
         }
     }
 
-})(CategoryController, UICtrl);
+})(CategoryController, UIController);
 
 // Initialize App
 App.init();
