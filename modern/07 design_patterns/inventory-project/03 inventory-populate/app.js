@@ -2,7 +2,7 @@
 
 
 // Item Controller
-const CategoryCtrl = (function(){
+const CategoryController = (function(){
     // Item Constructor
     const Item = function(categoryId, categoryName, description){
         this.categoryId = categoryId;
@@ -11,22 +11,25 @@ const CategoryCtrl = (function(){
     }
 
     // Data Structure / State
-    const data = {
-        categories: [
-            {categoryId: 1, categoryName: 'Computers', description: 'Computers'},
-            {categoryId: 2, categoryName: 'Smart Phones', description: 'Smart Phones'},
-            {categoryId: 3, categoryName: 'Kids', description: 'Kids'},
-        ],
+/*    const data = {
+
+        categories: [],
         currentCategory: null
-    }
+    }*/
 
     // Public methods
     return {
         getCategories: function(){
-            return data.categories;
+            let categories;
+            if(localStorage.getItem('categories') === null) {
+                categories = [];
+            } else {
+                categories = JSON.parse(localStorage.getItem('categories'));
+            }
+            return categories;
         },
         logData: function(){
-            return data;
+            return [];
         }
     }
 })();
@@ -65,19 +68,19 @@ const UICtrl = (function(){
 
 
 // App Controller
-const App = (function(CategoryCtrl, UICtrl){
+const App = (function(CategoryController, UICtrl){
 
     // Public methods
     return {
         init: function(){
-            const categories = CategoryCtrl.getCategories();
+            const categories = CategoryController.getCategories();
 
             // Populate list with items
             UICtrl.populateCateogryList(categories);
         }
     }
 
-})(CategoryCtrl, UICtrl);
+})(CategoryController, UICtrl);
 
 // Initialize App
 App.init();
