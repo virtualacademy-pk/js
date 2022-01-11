@@ -7,24 +7,27 @@ class Person {
         this.gender = gender;
     }
 }
-let persons = [];
-let counter = 0;
-const PersonModule =  {
+
+const PersonModule =  function() {
+    let persons = [];
+    let counter = 0;
+    return {
         add: (person) => {
             persons[counter] = person;
             counter++;
         },
-        print:  () => {
+        print: () => {
             persons.forEach(v => {
                 console.log(v)
             });
         },
-        size:  () => {
+        size: () => {
             return counter;
         },
         find: (id) => {
             return persons.filter(f => f.id === id);
         }
-};
+    }
+}();
 
  export {PersonModule, Person}
