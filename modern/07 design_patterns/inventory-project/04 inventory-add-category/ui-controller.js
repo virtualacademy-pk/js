@@ -1,7 +1,13 @@
 export const UIController = (function(){
     const UISelectors = {
         categoryList: '#category-list tbody',
-
+        addBtn: '.add-btn',
+        updateBtn: '.update-btn',
+        deleteBtn: '.delete-btn',
+        backBtn: '.back-btn',
+        categoryIdInput: '#categoryId',
+        categoryNameInput: '#categoryName',
+        descriptionInput: '#description'
     }
     // Public methods
     return {
@@ -20,9 +26,18 @@ export const UIController = (function(){
             </td>
           </tr>`;
             });
-
-            // Insert list items
             document.querySelector(UISelectors.categoryList).innerHTML = html;
+        },
+        getCategoryInput: function(){
+            return {
+                categoryId: document.querySelector(UISelectors.categoryIdInput).value,
+                categoryName: document.querySelector(UISelectors.categoryNameInput).value,
+                description: document.querySelector(UISelectors.descriptionInput).value
+            }
+        },
+        getSelectors: function(){
+            return UISelectors;
         }
     }
 })();
+

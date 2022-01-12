@@ -15,7 +15,7 @@ const App = (function(CategoryController, UIController){
         const input = UIController.getCategoryInput();
 
         CategoryController.addCategory(input);
-
+        UIController.clearForm();
 
         // Populate list with items
         UIController.populateCateogryList(CategoryController.getCategories());
@@ -30,6 +30,10 @@ const App = (function(CategoryController, UIController){
             // Populate list with items
             UIController.populateCateogryList(categories);
             loadEventListeners();
+            document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+            document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
         }
     }
 

@@ -26,7 +26,7 @@ export const CategoryController = (function() {
             categories.push(newItem);
             localStorage.setItem('categories', JSON.stringify(categories));
         },
-        logData: function(){
+               logData: function(){
             return data;
         }
     }
