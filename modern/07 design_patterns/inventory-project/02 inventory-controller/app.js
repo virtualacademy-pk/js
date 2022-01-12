@@ -3,7 +3,7 @@ import {CategoryController} from "./category-controller.js";
 
 
 // App Controller
-const App = (function(CategoryController, UICtrl){
+const App = (function(CategoryController, UIController){
 
     // Public methods
     return {
