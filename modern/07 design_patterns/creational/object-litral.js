@@ -1,33 +1,31 @@
-class Person {
-    constructor(id, firstName, lastName, gender) {
-
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-    }
+function Person(id, firstName, lastName, gender) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
 }
-
-// let persons = [];
-// let counter = 0;
 const PersonModule = {
     persons: [],
     counter: 0,
-    add: (person) => {
+    add: function (person) {
         PersonModule.persons[PersonModule.counter] = person;
         PersonModule.counter++;
     },
-    print: () => {
-        PersonModule.persons.forEach(v => {
-            console.log(v)
+    print: function() {
+        PersonModule.persons.forEach(person => {
+            console.log(person);
         });
     },
-    size: () => {
+    size: function() {
         return PersonModule.counter;
     },
-    find: (id) => {
+    find: function (id) {
         return PersonModule.persons.filter(f => f.id === id);
     }
-};
 
-export {PersonModule, Person}
+}
+PersonModule.add(new Person  (1, 'Ali', 'Imran', 'Male'));
+
+PersonModule.add(new Person  (2, 'Aamir', 'Sohail', 'Male'));
+console.log(PersonModule.persons);
+
