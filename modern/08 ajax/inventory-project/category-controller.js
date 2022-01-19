@@ -1,73 +1,31 @@
 import {Category} from "./category.js";
+import {HttpApi} from "./http-api.js";
 
 export const CategoryController = (function() {
 
 
     // Public methods
     return {
-        getCategories: function(){
-            let categories;
-            if(localStorage.getItem('categories') === null) {
-                categories = [];
-            } else {
-                categories = JSON.parse(localStorage.getItem('categories'));
-            }
-            return categories;
+        getCategories: async function(){
+            let response =  await HttpApi.get('http://192.168.120.100/northwind-php/api/categories');
+            return  JSON.parse(response);
         },
-        addCategory: function(category){
-            // Create new item
-           const newItem = new Category(category.categoryId, category.categoryName, category.description);
-            let categories;
-            if(localStorage.getItem('categories') === null) {
-                categories = [];
-            } else {
-                categories = JSON.parse(localStorage.getItem('categories'));
-            }
-            categories.push(newItem);
-            localStorage.setItem('categories', JSON.stringify(categories));
+        addCategory: async function(category){
+            let response =  await HttpApi.post('http://192.168.120.100/northwind-php/api/categories/' , category);
+            return  JSON.parse(response);
         },
-        findById: function(id){
-            let category = {};
-            let categories;
-            if(localStorage.getItem('categories') === null) {
-                categories = [];
-            } else {
-                categories = JSON.parse(localStorage.getItem('categories'));
-                category = categories.filter(v => v.categoryId === id)[0];
-            }
-            return category;
+        findById: async function(id){
+            let response =  await HttpApi.get('http://192.168.120.100/northwind-php/api/categories/' + id);
+            return  JSON.parse(response);
+
         },
-        updateCategory: function(data) {
-            let categories;
-            if(localStorage.getItem('categories') === null){
-                categories = [];
-            } else {
-                categories = JSON.parse(localStorage.getItem('categories'));
-            }
-
-            categories.forEach(function(category, index){
-                if(category.categoryId === data.categoryId){
-                    categories[index] = data;
-                }
-            });
-
-            localStorage.setItem('categories', JSON.stringify(categories));
+        updateCategory: async function(data) {
+            let response =  await HttpApi.put('http://192.168.120.100/northwind-php/api/categories/' , data);
+            return  JSON.parse(response);
         },
-        deleteCategory: function(id){
-            let categories;
-            if(localStorage.getItem('categories') === null){
-                categories = [];
-            } else {
-                categories = JSON.parse(localStorage.getItem('categories'));
-            }
-
-            categories.forEach(function(category, index){
-                if(category.categoryId === id){
-                    categories.splice(index, 1);
-                }
-            });
-
-            localStorage.setItem('categories', JSON.stringify(categories));
+        deleteCategory: async function(id){
+            let response =  await HttpApi.delete('http://192.168.120.100/northwind-php/api/categories/' + id);
+            return  JSON.parse(response);
         },
         logData: function(){
             return data;

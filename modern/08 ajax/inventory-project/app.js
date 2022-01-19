@@ -20,12 +20,17 @@ const App = (function(CategoryController, UIController){
         // Get form input from UI Controller
         const input = UIController.getCategoryInput();
 
-        CategoryController.addCategory(input);
+        CategoryController.addCategory(input).then(resp => {
+            UIController.clearForm();
+            // Populate list with items
+            CategoryController.getCategories().then(categories => {
+                UIController.populateCateogryList(categories);
+                Materialize.toast('Category saved successfully', 2000, 'green accent-4');
+            });
 
-        UIController.clearForm();
-        // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category saved successfully', 2000, 'green accent-4');
+        });
+
+
         e.preventDefault();
     }
     const backAction = function(e){
@@ -38,43 +43,59 @@ const App = (function(CategoryController, UIController){
 
 
         // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
+        CategoryController.getCategories().then(categories => {
+            UIController.populateCateogryList(categories);
+
+        });
 
         e.preventDefault();
     }
     const updateAction = function(e){
         // Get form input from UI Controller
         const input = UIController.getCategoryInput();
-        CategoryController.updateCategory(input);
-        UIController.clearForm();
+        CategoryController.updateCategory(input).then(resp => {
+            UIController.clearForm();
 
-        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+            document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+            CategoryController.getCategories().then(categories => {
+                UIController.populateCateogryList(categories);
+                Materialize.toast('Category updated successfully', 2000, 'green accent-4');
+            });
+
+        });
+
 
 
         // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category updated successfully', 2000, 'green accent-4');
+
         e.preventDefault();
     }
     const deleteAction = function(e){
 
         // Get form input from UI Controller
         const input = UIController.getCategoryInput();
-        CategoryController.deleteCategory(input.categoryId);
-        UIController.clearForm();
+        CategoryController.deleteCategory(input.categoryId).then(resp => {
+            UIController.clearForm();
 
-        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+            document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+            document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+
+            CategoryController.getCategories().then(categories => {
+                UIController.populateCateogryList(categories);
+                Materialize.toast('Category deleted successfully', 2000, 'green accent-4');
+            });
+
+        });
+
 
 
         // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category deleted successfully', 2000, 'green accent-4');
+
 
         e.preventDefault();
     }
@@ -90,13 +111,15 @@ const App = (function(CategoryController, UIController){
             const id = e.target.parentElement.parentElement.parentElement.id.split("-")[1]
 
 
-            const category = CategoryController.findById(id);
+              CategoryController.findById(id).then(category => {
+                  UIController.populateForm(category);
+                  document.querySelector(UIController.getSelectors().updateBtn).style.display = "inline";
+                  document.querySelector(UIController.getSelectors().deleteBtn).style.display = "inline";
+                  document.querySelector(UIController.getSelectors().backBtn).style.display = "inline";
+                  document.querySelector(UIController.getSelectors().addBtn).style.display = "none";
+              });
 
-           UIController.populateForm(category);
-            document.querySelector(UIController.getSelectors().updateBtn).style.display = "inline";
-            document.querySelector(UIController.getSelectors().deleteBtn).style.display = "inline";
-            document.querySelector(UIController.getSelectors().backBtn).style.display = "inline";
-            document.querySelector(UIController.getSelectors().addBtn).style.display = "none";
+
 
         }
 
@@ -105,14 +128,16 @@ const App = (function(CategoryController, UIController){
     // Public methods
     return {
         init: function(){
-            const categories = CategoryController.getCategories();
-            document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
-            document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-            document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-            document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+            CategoryController.getCategories().then(categories => {
+                document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+                document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+                document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+                document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
 
-            // Populate list with items
-            UIController.populateCateogryList(categories);
+                // Populate list with items
+                UIController.populateCateogryList(categories);
+            });
+
             loadEventListeners();
             $('.modal').modal();
         }

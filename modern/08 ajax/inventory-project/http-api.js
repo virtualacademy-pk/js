@@ -1,36 +1,45 @@
 export const HttpApi = (function(){
-    const http = new XMLHttpRequest();
-    function getRequest (url, cb) {
+    async function getRequest (url) {
 
-        http.open('GET', url, true);
-        http.onload = function () {
-            cb(JSON.parse(http.responseText));
-        }
-        http.send();
+        let response = await  fetch(url);
+        let data = await response.text();
+        return data;
+
+
     }
-    function postRequest (url, data, cb) {
+    async function postRequest (url, data) {
 
-        http.open('POST', url, true);
-        http.onload = function () {
-            cb(JSON.parse(http.responseText));
-        }
-        http.send(JSON.stringify(data));
+        let response =  await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'applicaiton/json'
+            },
+            body: JSON.stringify(data)
+        });
+        let respData = await response.text();
+        return respData;
+
     }
-    function putRequest (url, data, cb) {
 
-        http.open('PUT', url, true);
-        http.onload = function () {
-            cb(JSON.parse(http.responseText));
-        }
-        http.send(JSON.stringify(data));
+    async function putRequest (url, data) {
+
+        let response = await    fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'applicaiton/json'
+            },
+            body: JSON.stringify(data)
+        }) ;
+        let respData = await response.text();
+        return respData;
     }
-    function deleteRequest (url, cb) {
+    async function deleteRequest (url, cb) {
 
-        http.open('DELETE', url, true);
-        http.onload = function () {
-            cb(JSON.parse(http.responseText));
-        }
-        http.send();
+        let response = await fetch(url, {
+            method: 'DELETE'
+        });
+        let data = await response.text();
+        return data;
     }
     // Public methods
     return {
