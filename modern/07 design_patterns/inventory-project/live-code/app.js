@@ -1,6 +1,5 @@
 import {UIController} from "./ui-controller.js";
 import {CategoryController} from "./category-controller.js";
-import {Category} from "./category.js";
 
 
   // App Controller
@@ -13,74 +12,55 @@ const App = (function(CategoryController, UIController){
         document.querySelector(UISelectors.tableBodySelector).addEventListener('click', categoryUpdateSubmit);
         document.querySelector(UISelectors.updateBtn).addEventListener('click', updateAction);
         document.querySelector(UISelectors.backBtn).addEventListener('click', backAction);
-        document.querySelector(UISelectors.deleteBtn).addEventListener('click', openConfirmation);
-        document.querySelector(UISelectors.deleteYesBtn).addEventListener('click', deleteAction);
+        document.querySelector(UISelectors.deleteBtn).addEventListener('click', deleteAction);
+    }
+
+    const deleteAction = function(e) {
+        const input = UIController.getCategoryInput();
+        CategoryController.deleteCategory(input.categoryId);
+        UIController.clearForm();
+
+        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+
+        UIController.populateCateogryList(CategoryController.getCategories());
+
+
+    }
+    const updateAction = function(e) {
+        const input = UIController.getCategoryInput();
+        CategoryController.updateCategory(input);
+       UIController.clearForm();
+
+        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+
+        UIController.populateCateogryList(CategoryController.getCategories());
+
+
+    }
+    const backAction = function(e) {
+        UIController.clearForm();
+
+        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
+        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
+        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
+
     }
     const categoryAddSubmit = function(e){
         // Get form input from UI Controller
         const input = UIController.getCategoryInput();
 
         CategoryController.addCategory(input);
-
         UIController.clearForm();
         // Populate list with items
         UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category saved successfully', 2000, 'green accent-4');
-        e.preventDefault();
-    }
-    const backAction = function(e){
-        UIController.clearForm();
 
-        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
-
-
-        // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-
-        e.preventDefault();
-    }
-    const updateAction = function(e){
-        // Get form input from UI Controller
-        const input = UIController.getCategoryInput();
-        CategoryController.updateCategory(input);
-        UIController.clearForm();
-
-        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
-
-
-        // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category updated successfully', 2000, 'green accent-4');
-        e.preventDefault();
-    }
-    const deleteAction = function(e){
-
-        // Get form input from UI Controller
-        const input = UIController.getCategoryInput();
-        CategoryController.deleteCategory(input.categoryId);
-        UIController.clearForm();
-
-        document.querySelector(UIController.getSelectors().updateBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().deleteBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().backBtn).style.display = "none";
-        document.querySelector(UIController.getSelectors().addBtn).style.display = "inline";
-
-
-        // Populate list with items
-        UIController.populateCateogryList(CategoryController.getCategories());
-        Materialize.toast('Category deleted successfully', 2000, 'green accent-4');
-
-        e.preventDefault();
-    }
-
-    const openConfirmation = function(e) {
-        $(UIController.getSelectors().modalSelector).modal('open');
         e.preventDefault();
     }
     const categoryUpdateSubmit = function(e){
@@ -97,7 +77,6 @@ const App = (function(CategoryController, UIController){
             document.querySelector(UIController.getSelectors().deleteBtn).style.display = "inline";
             document.querySelector(UIController.getSelectors().backBtn).style.display = "inline";
             document.querySelector(UIController.getSelectors().addBtn).style.display = "none";
-
         }
 
         e.preventDefault();
@@ -114,7 +93,6 @@ const App = (function(CategoryController, UIController){
             // Populate list with items
             UIController.populateCateogryList(categories);
             loadEventListeners();
-            $('.modal').modal();
         }
     }
 

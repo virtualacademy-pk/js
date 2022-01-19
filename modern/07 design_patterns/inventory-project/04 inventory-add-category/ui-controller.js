@@ -35,6 +35,15 @@ export const UIController = (function(){
                 description: document.querySelector(UISelectors.descriptionInput).value
             }
         },
+        clearForm: function(){
+            document.querySelector(UISelectors.categoryIdInput).value = null;
+            document.querySelector(UISelectors.categoryNameInput).value = null;
+            document.querySelector(UISelectors.descriptionInput).value = null;
+            document.querySelector(UISelectors.categoryIdInput).classList.remove('valid');
+            document.querySelector(UISelectors.categoryNameInput).classList.remove('valid');
+            document.querySelector(UISelectors.descriptionInput).classList.remove('valid');
+
+        },
         getSelectors: function(){
             return UISelectors;
         }

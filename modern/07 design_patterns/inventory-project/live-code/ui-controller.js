@@ -8,9 +8,7 @@ export const UIController = (function(){
         categoryIdInput: '#categoryId',
         categoryNameInput: '#categoryName',
         descriptionInput: '#description',
-        tableBodySelector: 'tbody',
-        modalSelector: '.modal',
-        deleteYesBtn: '.yes-btn'
+        tableBodySelector: 'tbody'
     }
     // Public methods
     return {
@@ -49,14 +47,13 @@ export const UIController = (function(){
             document.querySelector(UISelectors.categoryNameInput).focus();
             document.querySelector(UISelectors.descriptionInput).focus();
          },
-
         clearForm: function(){
             document.querySelector(UISelectors.categoryIdInput).value = null;
             document.querySelector(UISelectors.categoryNameInput).value = null;
             document.querySelector(UISelectors.descriptionInput).value = null;
-             document.querySelector(UISelectors.categoryIdInput).classList.remove('valid');
-              document.querySelector(UISelectors.categoryNameInput).classList.remove('valid');
-           document.querySelector(UISelectors.descriptionInput).classList.remove('valid');
+            document.querySelector(UISelectors.categoryIdInput).classList.remove('valid');
+            document.querySelector(UISelectors.categoryNameInput).classList.remove('valid');
+            document.querySelector(UISelectors.descriptionInput).classList.remove('valid');
 
         }
     }
